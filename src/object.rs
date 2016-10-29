@@ -52,7 +52,7 @@ impl Object {
         self.velocity = self.velocity + acceleration * time;
     }
 
-    fn force_sum_caching(&mut self) -> Vector {
+    pub fn force_sum_caching(&mut self) -> Vector {
         if self.force_sum_cache.is_some() {
             self.force_sum_cache.unwrap()
         } else {
@@ -62,7 +62,7 @@ impl Object {
         }
     }
 
-    fn force_sum(&self) -> Vector {
+    pub fn force_sum(&self) -> Vector {
         self.force_sum_cache.unwrap_or(self.acting_forces.iter().cloned().sum())
     }
 
