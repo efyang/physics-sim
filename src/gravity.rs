@@ -9,7 +9,7 @@ pub fn gravitational_forces(object1: &Object, object2: &Object) -> (Vector, Vect
     let mass_product = object1.mass() * object2.mass();
     let magnitude = G_CONSTANT * (mass_product / distance.powi(2));
     let angle1 = object1.angle_to(object2);
-    let angle2 = angle1 + 180./::std::f64::consts::PI;
+    let angle2 = angle1 + ::std::f64::consts::PI;
 
     (Vector::new(magnitude, angle1), Vector::new(magnitude, angle2))
 }

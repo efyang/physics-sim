@@ -7,3 +7,4 @@ pub use point::Point;
 pub use vector::Vector;
 pub use object::Object;
 pub use universe::Universe;
+pub use gravity::gravitational_forces;
