@@ -71,7 +71,7 @@ impl Object {
     }
 
     pub fn get_radius(&self) -> f64 {
-        (self.mass / ::std::f64::consts::PI).sqrt()
+        ((self.mass * 0.75) / ::std::f64::consts::PI).powf(1./3.)
     }
 
     pub fn distance_to(&self, other: &Object) -> f64 {
