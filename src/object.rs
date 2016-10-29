@@ -100,7 +100,7 @@ impl Object {
         let time_in_collision = self.distance_to(other) /
                                 (self.velocity.magnitude() + other.velocity.magnitude());
         self.position = self.position + self.velocity * time_in_collision;
-        self.velocity = self.velocity + other.velocity * time_in_collision;
+        self.velocity = self.velocity + (force_add / self.mass) * time_in_collision;
         self.mass += other.mass;
     }
 }
