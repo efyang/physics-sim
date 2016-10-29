@@ -62,6 +62,10 @@ impl Object {
         self.force_sum_cache.unwrap_or(self.acting_forces.iter().cloned().sum())
     }
 
+    pub fn position(&self) -> Point {
+        self.position
+    }
+
     pub fn get_radius(&self) -> f64 {
         (self.mass / ::std::f64::consts::PI).sqrt()
     }
