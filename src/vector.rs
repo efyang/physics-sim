@@ -11,7 +11,7 @@ impl Vector {
     pub fn new(magnitude: f64, radians: f64) -> Self {
         Vector {
             magnitude: magnitude,
-            radians: radians
+            radians: radians,
         }
     }
 
@@ -29,6 +29,14 @@ impl Vector {
     pub fn get_components(&self) -> (f64, f64) {
         let (sin, cos) = self.radians.sin_cos();
         (sin * self.magnitude, cos * self.magnitude)
+    }
+
+    pub fn magnitude(&self) -> f64 {
+        self.magnitude
+    }
+
+    pub fn radians(&self) -> f64 {
+        self.radians
     }
 }
 
