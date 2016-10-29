@@ -26,6 +26,10 @@ impl Object {
         self.mass
     }
 
+    pub fn velocity(&self) -> Vector {
+        self.velocity
+    }
+
     pub fn add_force(&mut self, force: Vector) {
         self.acting_forces.push(force);
     }
