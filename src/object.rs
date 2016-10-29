@@ -37,7 +37,7 @@ impl Object {
     pub fn update_state(&mut self, time: Duration) {
         let force_sum = self.force_sum_caching();
         let acceleration = force_sum / self.mass;
-        let time_s = time.as_secs() as f64;
+        let time_s = time.as_secs() as f64 + time.subsec_nanos() as f64 * 10f64.powi(-9);
         self.update_position(acceleration, time_s);
         self.update_velocity(acceleration, time_s);
         self.acting_forces.clear();
