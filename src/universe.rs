@@ -1,6 +1,5 @@
 use super::object::Object;
 use super::gravity::gravitational_forces;
-use std::time::Duration;
 
 pub struct Universe {
     objects: Vec<Object>,
@@ -15,14 +14,14 @@ impl Universe {
         self.objects.push(object)
     }
 
-    pub fn update_state_repeat(&mut self, time: Duration, iterations: usize) {
-        let time_per_iter = time / iterations as u32;
+    pub fn update_state_repeat(&mut self, time: f64, iterations: usize) {
+        let time_per_iter = time / iterations as f64;
         for _ in 0..iterations {
             self.update_state(time_per_iter);
         }
     }
 
-    pub fn update_state(&mut self, time: Duration) {
+    pub fn update_state(&mut self, time: f64) {
         // check for and handle any collisions
         for i in 0..self.objects.len() - 1 {
             for j in (i + 1..self.objects.len()).rev() {
