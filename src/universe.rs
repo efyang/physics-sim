@@ -15,10 +15,17 @@ impl Universe {
         self.objects.push(object)
     }
 
+    pub fn update_state_repeat(&mut self, time: Duration, iterations: usize) {
+        let time_per_iter = time / iterations as u32;
+        for _ in 0..iterations {
+            self.update_state(time_per_iter);
+        }
+    }
+
     pub fn update_state(&mut self, time: Duration) {
         // check for and handle any collisions
-        for i in 0..self.objects.len()-1 {
-            for j in (i+1..self.objects.len()).rev() {
+        for i in 0..self.objects.len() - 1 {
+            for j in (i + 1..self.objects.len()).rev() {
                 if self.objects[i].is_colliding(&self.objects[j]) {
                     if self.objects[i].more_massive(&self.objects[j]) {
                         let other = self.objects[j].clone();
