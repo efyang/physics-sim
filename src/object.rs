@@ -88,7 +88,7 @@ impl Object {
     }
 
     pub fn is_colliding(&self, other: &Object) -> bool {
-        let collision_distance = self.get_radius() + other.get_radius();
+        let collision_distance = self.radius + other.radius;
         let distance = self.distance_to(other);
         distance < collision_distance
     }
