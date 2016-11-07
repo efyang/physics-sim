@@ -15,7 +15,7 @@ impl Object {
     pub fn new(mass: f64, velocity: Vector, position: Point) -> Self {
         Object {
             mass: mass,
-            radius: ((mass * 0.75) / ::std::f64::consts::PI).powf(1./3.),
+            radius: mass_to_radius(mass),
             velocity: velocity,
             position: position,
             acting_forces: Vec::new(),
@@ -110,5 +110,10 @@ impl Object {
         self.position = self.position + self.velocity * time_in_collision;
         self.velocity = self.velocity + (force_add / self.mass) * time_in_collision;
         self.mass += other.mass;
+        self.radius = mass_to_radius(self.mass);
     }
+}
+
+fn mass_to_radius(mass: f64) -> f64 {
+    ((mass * 0.75) / ::std::f64::consts::PI).powf(1./3.)
 }
