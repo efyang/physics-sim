@@ -4,6 +4,7 @@ use super::point::Point;
 #[derive(Clone, Debug)]
 pub struct Object {
     mass: f64,
+    radius: f64,
     velocity: Vector,
     position: Point,
     acting_forces: Vec<Vector>,
@@ -14,6 +15,7 @@ impl Object {
     pub fn new(mass: f64, velocity: Vector, position: Point) -> Self {
         Object {
             mass: mass,
+            radius: ((mass * 0.75) / ::std::f64::consts::PI).powf(1./3.),
             velocity: velocity,
             position: position,
             acting_forces: Vec::new(),
@@ -68,8 +70,8 @@ impl Object {
         self.position
     }
 
-    pub fn get_radius(&self) -> f64 {
-        ((self.mass * 0.75) / ::std::f64::consts::PI).powf(1./3.)
+    pub fn radius(&self) -> f64 {
+        self.radius
     }
 
     pub fn distance_to(&self, other: &Object) -> f64 {
