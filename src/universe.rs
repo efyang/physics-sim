@@ -6,22 +6,29 @@ pub struct Universe {
 }
 
 impl Universe {
+    /// get the slice of all objects
     pub fn objects(&self) -> &[Object] {
         self.objects.as_slice()
     }
 
+    /// add object to univers
     pub fn add_object(&mut self, object: Object) {
         self.objects.push(object)
     }
 
-    pub fn update_state_repeat(&mut self, time: f64, iterations: usize) {
+    /// returns list of indices removed
+    pub fn update_state_repeat(&mut self, time: f64, iterations: usize) -> Vec<usize> {
+        let mut removed_indices = Vec::new();
         let time_per_iter = time / iterations as f64;
         for _ in 0..iterations {
-            self.update_state(time_per_iter);
+            removed_indices.extend(self.update_state(time_per_iter));
         }
+        removed_indices
     }
 
-    pub fn update_state(&mut self, time: f64) {
+    /// returns list of indices removed
+    pub fn update_state(&mut self, time: f64) -> Vec<usize> {
+        let mut removed_indices = Vec::new();
         // check for and handle any collisions
         for i in 0..self.objects.len() - 1 {
             for j in (i + 1..self.objects.len()).rev() {
@@ -30,10 +37,12 @@ impl Universe {
                         let other = self.objects[j].clone();
                         self.objects[i].absorb_other(&other);
                         self.objects.remove(j);
+                        removed_indices.push(j);
                     } else {
                         let other = self.objects[i].clone();
                         self.objects[j].absorb_other(&other);
                         self.objects.remove(i);
+                        removed_indices.push(i);
                     }
                 }
             }
@@ -48,6 +57,7 @@ impl Universe {
             }
             self.objects[i].update_state(time);
         }
+        removed_indices
     }
 }
 
