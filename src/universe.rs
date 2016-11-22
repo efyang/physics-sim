@@ -1,6 +1,7 @@
 use super::object::Object;
 use super::gravity::gravitational_forces;
 
+#[derive(Debug)]
 pub struct Universe {
     objects: Vec<Object>,
 }
