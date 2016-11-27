@@ -74,8 +74,12 @@ impl Object {
         self.radius
     }
 
+    pub fn distance_to_squared(&self, other: &Object) -> f64 {
+        self.position.distance_to_squared(&other.position)
+    }
+
     pub fn distance_to(&self, other: &Object) -> f64 {
-        self.position.distance_to(&other.position)
+        self.distance_to_squared(other).sqrt()
     }
 
     pub fn angle_to(&self, other: &Object) -> f64 {

@@ -12,7 +12,10 @@ impl Point {
         Point { x: x, y: y }
     }
     pub fn distance_to(&self, other: &Point) -> f64 {
-        ((self.x - other.x).powi(2) + (self.y - other.y).powi(2)).sqrt()
+        self.distance_to_squared(other).sqrt()
+    }
+    pub fn distance_to_squared(&self, other: &Point) -> f64 {
+        (self.x - other.x).powi(2) + (self.y - other.y).powi(2)
     }
 }
 
