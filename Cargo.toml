@@ -2,3 +2,10 @@
 authors = ["Edward Yang <edward.yang6771@gmail.com>"]
 name = "physics-sim"
 version = "0.1.0"
+
+[dependencies]
+simd = {version = "0.1.1", optional = true}
+
+[features]
+default = ["simd-opts"]
+simd-opts = ["simd"]
