@@ -18,9 +18,9 @@ impl Universe {
     }
 
     /// returns list of indices removed
-    pub fn update_state_repeat(&mut self, time: f64, iterations: usize) -> Vec<usize> {
+    pub fn update_state_repeat(&mut self, time: f32, iterations: usize) -> Vec<usize> {
         let mut removed_indices = Vec::new();
-        let time_per_iter = time / iterations as f64;
+        let time_per_iter = time / iterations as f32;
         for _ in 0..iterations {
             removed_indices.extend(self.update_state(time_per_iter));
         }
@@ -28,7 +28,7 @@ impl Universe {
     }
 
     /// returns list of indices removed
-    pub fn update_state(&mut self, time: f64) -> Vec<usize> {
+    pub fn update_state(&mut self, time: f32) -> Vec<usize> {
         let mut removed_indices = Vec::new();
         // check for and handle any collisions
         for i in 0..self.objects.len() - 1 {

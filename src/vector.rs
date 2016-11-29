@@ -3,39 +3,39 @@ use std::iter::{Iterator, Sum};
 
 #[derive(Copy, Clone, Debug)]
 pub struct Vector {
-    magnitude: f64,
-    radians: f64,
+    magnitude: f32,
+    radians: f32,
 }
 
 impl Vector {
-    pub fn new(magnitude: f64, radians: f64) -> Self {
+    pub fn new(magnitude: f32, radians: f32) -> Self {
         Vector {
             magnitude: magnitude,
             radians: radians,
         }
     }
 
-    pub fn new_from_angle(magnitude: f64, angle: f64) -> Self {
+    pub fn new_from_angle(magnitude: f32, angle: f32) -> Self {
         Self::new(magnitude, angle.to_radians())
     }
-    // fn get_horizontal_component(&self) -> f64 {
+    // fn get_horizontal_component(&self) -> f32 {
     // self.radians.cos() * self.magnitude
     // }
-    // fn get_vertical_component(&self) -> f64 {
+    // fn get_vertical_component(&self) -> f32 {
     // self.radians.sin() * self.magnitude
     // }
 
     // vertical, horizontal
-    pub fn get_components(&self) -> (f64, f64) {
+    pub fn get_components(&self) -> (f32, f32) {
         let (sin, cos) = self.radians.sin_cos();
         (sin * self.magnitude, cos * self.magnitude)
     }
 
-    pub fn magnitude(&self) -> f64 {
+    pub fn magnitude(&self) -> f32 {
         self.magnitude
     }
 
-    pub fn radians(&self) -> f64 {
+    pub fn radians(&self) -> f32 {
         self.radians
     }
 }
@@ -52,7 +52,7 @@ impl Default for Vector {
 impl Add for Vector {
     type Output = Self;
     fn add(self, other: Self) -> Self {
-        fn pythagorean(a: f64, b: f64) -> f64 {
+        fn pythagorean(a: f32, b: f32) -> f32 {
             (a.powi(2) + b.powi(2)).sqrt()
         }
 
@@ -67,16 +67,16 @@ impl Add for Vector {
     }
 }
 
-impl Mul<f64> for Vector {
+impl Mul<f32> for Vector {
     type Output = Self;
-    fn mul(self, scalar: f64) -> Self {
+    fn mul(self, scalar: f32) -> Self {
         Vector { magnitude: self.magnitude * scalar, ..self }
     }
 }
 
-impl Div<f64> for Vector {
+impl Div<f32> for Vector {
     type Output = Self;
-    fn div(self, scalar: f64) -> Self {
+    fn div(self, scalar: f32) -> Self {
         Vector { magnitude: self.magnitude / scalar, ..self }
     }
 }

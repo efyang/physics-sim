@@ -3,8 +3,8 @@ use super::point::Point;
 
 #[derive(Clone, Debug)]
 pub struct Object {
-    mass: f64,
-    radius: f64,
+    mass: f32,
+    radius: f32,
     velocity: Vector,
     position: Point,
     acting_forces: Vec<Vector>,
@@ -12,7 +12,7 @@ pub struct Object {
 }
 
 impl Object {
-    pub fn new(mass: f64, velocity: Vector, position: Point) -> Self {
+    pub fn new(mass: f32, velocity: Vector, position: Point) -> Self {
         Object {
             mass: mass,
             radius: mass_to_radius(mass),
@@ -23,7 +23,7 @@ impl Object {
         }
     }
 
-    pub fn mass(&self) -> f64 {
+    pub fn mass(&self) -> f32 {
         self.mass
     }
 
@@ -35,7 +35,7 @@ impl Object {
         self.acting_forces.push(force);
     }
 
-    pub fn update_state(&mut self, time: f64) {
+    pub fn update_state(&mut self, time: f32) {
         let force_sum = self.force_sum_caching();
         let acceleration = force_sum / self.mass;
         self.update_position(acceleration, time);
@@ -44,11 +44,11 @@ impl Object {
         self.force_sum_cache = None;
     }
 
-    fn update_position(&mut self, acceleration: Vector, time: f64) {
+    fn update_position(&mut self, acceleration: Vector, time: f32) {
         self.position = self.position + self.velocity * time + acceleration * time.powi(2) / 2.;
     }
 
-    fn update_velocity(&mut self, acceleration: Vector, time: f64) {
+    fn update_velocity(&mut self, acceleration: Vector, time: f32) {
         self.velocity = self.velocity + acceleration * time;
     }
 
@@ -70,19 +70,19 @@ impl Object {
         self.position
     }
 
-    pub fn radius(&self) -> f64 {
+    pub fn radius(&self) -> f32 {
         self.radius
     }
 
-    pub fn distance_to_squared(&self, other: &Object) -> f64 {
+    pub fn distance_to_squared(&self, other: &Object) -> f32 {
         self.position.distance_to_squared(&other.position)
     }
 
-    pub fn distance_to(&self, other: &Object) -> f64 {
+    pub fn distance_to(&self, other: &Object) -> f32 {
         self.distance_to_squared(other).sqrt()
     }
 
-    pub fn angle_to(&self, other: &Object) -> f64 {
+    pub fn angle_to(&self, other: &Object) -> f32 {
         let (x, y) = (other.position.x - self.position.x, other.position.y - self.position.y);
         y.atan2(x)
     }
@@ -118,6 +118,6 @@ impl Object {
     }
 }
 
-fn mass_to_radius(mass: f64) -> f64 {
-    ((mass * 0.75) / ::std::f64::consts::PI).powf(1./3.)
+fn mass_to_radius(mass: f32) -> f32 {
+    ((mass * 0.75) / ::std::f32::consts::PI).powf(1./3.)
 }
