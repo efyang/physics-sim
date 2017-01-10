@@ -7,8 +7,7 @@ pub struct Object {
     radius: f64,
     velocity: Vector,
     position: Point,
-    acting_forces: Vec<Vector>,
-    force_sum_cache: Option<Vector>,
+    acting_forces: Vector,
 }
 
 impl Object {
@@ -18,8 +17,7 @@ impl Object {
             radius: mass_to_radius(mass),
             velocity: velocity,
             position: position,
-            acting_forces: Vec::new(),
-            force_sum_cache: None,
+            acting_forces: Vector::default(),
         }
     }
 
@@ -32,16 +30,15 @@ impl Object {
     }
 
     pub fn add_force(&mut self, force: Vector) {
-        self.acting_forces.push(force);
+        self.acting_forces = self.acting_forces + force;
     }
 
     pub fn update_state(&mut self, time: f64) {
-        let force_sum = self.force_sum_caching();
+        let force_sum = self.acting_forces;
         let acceleration = force_sum / self.mass;
         self.update_position(acceleration, time);
         self.update_velocity(acceleration, time);
-        self.acting_forces.clear();
-        self.force_sum_cache = None;
+        self.acting_forces = Vector::default();
     }
 
     fn update_position(&mut self, acceleration: Vector, time: f64) {
@@ -52,18 +49,8 @@ impl Object {
         self.velocity = self.velocity + acceleration * time;
     }
 
-    pub fn force_sum_caching(&mut self) -> Vector {
-        if self.force_sum_cache.is_some() {
-            self.force_sum_cache.unwrap()
-        } else {
-            let sum = self.acting_forces.iter().cloned().sum();
-            self.force_sum_cache = Some(sum);
-            sum
-        }
-    }
-
     pub fn force_sum(&self) -> Vector {
-        self.force_sum_cache.unwrap_or(self.acting_forces.iter().cloned().sum())
+        self.acting_forces
     }
 
     pub fn position(&self) -> Point {
