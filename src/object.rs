@@ -5,16 +5,18 @@ use super::point::Point;
 pub struct Object {
     mass: f64,
     radius: f64,
+    density: f64,
     velocity: Vector,
     position: Point,
     acting_forces: Vector,
 }
 
 impl Object {
-    pub fn new(mass: f64, velocity: Vector, position: Point) -> Self {
+    pub fn new(mass: f64, density: f64, velocity: Vector, position: Point) -> Self {
         Object {
             mass: mass,
-            radius: mass_to_radius(mass),
+            radius: mass_to_radius(mass, density),
+            density: density,
             velocity: velocity,
             position: position,
             acting_forces: Vector::default(),
@@ -100,11 +102,11 @@ impl Object {
                                 (self.velocity.magnitude() + other.velocity.magnitude());
         self.position = self.position + self.velocity * time_in_collision;
         self.velocity = self.velocity + (force_add / self.mass) * time_in_collision;
-        self.mass += other.mass;
-        self.radius = mass_to_radius(self.mass);
+        self.mass += other.mass; // make this change density too at some point
+        self.radius = mass_to_radius(self.mass, self.density);
     }
 }
 
-fn mass_to_radius(mass: f64) -> f64 {
-    ((mass * 0.75) / ::std::f64::consts::PI).powf(1./3.)
+fn mass_to_radius(mass: f64, density: f64) -> f64 {
+    (((mass / density) * 0.75) / ::std::f64::consts::PI).powf(1. / 3.)
 }
